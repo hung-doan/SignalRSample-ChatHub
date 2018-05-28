@@ -1,0 +1,116 @@
+﻿@page
+@model SignalRSample.Pages.ChatModel
+@{
+    Layout = "_Layout";
+
+}
+@section Styles{
+    <style>
+        #chat-wrapper {
+            margin-top: 20px;
+        }
+
+        #msg-list {
+            margin-top: 20px;
+        }
+
+            #msg-list table tr td:first-child {
+                width: 100px;
+                padding: 4px;
+            }
+
+        .msg-item {
+        }
+
+            .msg-item .name {
+                text-align: right;
+                font-weight: bold;
+            }
+
+            .msg-item .message {
+                padding: 4px;
+                width: auto;
+                border-radius: 4px;
+            }
+
+            .msg-item.is-your .message {
+                background-color: #F2F2F2;
+            }
+            .msg-item.is-system .message {
+                color: #A8A8A8;
+            }
+    </style>
+}
+<br />
+<br />
+<div class="form-inline" style="margin: 20px; text-align: center; display: block;">
+    <span style="font-size: 2em; color: red; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Who are you?</span>
+    <br />
+    <input type="text" class="form-control" id="txtUserName" style="border-color: red; margin: 4px; text-align: center; color: green; " />
+    <br />
+    <button type="button" class="btn btn-danger" id="btnUserNameOk">OK</button>
+
+</div>
+
+<div id="chat-wrapper" style="display: none;">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="" id="txtMsg">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" id="btnSend" disabled="disabled">Send</button>
+        </span>
+    </div><!-- /input-group -->
+
+    <div id="msg-list">
+
+    </div>
+</div>
+
+<script id="msgTemplate" type="text/template">
+    <table style="width: 100%;">
+        {{#.}}
+        {{#isYour}}
+        <tr class="msg-item is-your">
+            <td>
+                <div class="name">{{name}}</div>
+            </td>
+            <td>
+                <div class="message">{{message}}</div>
+            </td>
+
+        </tr>
+        {{/isYour}}
+
+        {{#isMine}}
+        <tr class="msg-item is-mine">
+            <td>
+                <div class="name">{{name}}</div>
+            </td>
+            <td>
+                <div class="message">{{message}}</div>
+            </td>
+
+        </tr>
+        {{/isMine}}
+
+        {{#isSystem}}
+        <tr class="msg-item is-system">
+            <td>
+                <div class="name"></div>
+            </td>
+            <td>
+                <div class="message">{{message}}</div>
+            </td>
+
+        </tr>
+        {{/isSystem}}
+
+
+        {{/.}}
+    </table>
+</script>
+
+<table></table>
+@section Scripts{
+    <script src="/app/chat.js"></script>
+}
+
